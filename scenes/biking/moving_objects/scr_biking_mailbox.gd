@@ -1,4 +1,4 @@
-extends BikingMovingObject
+class_name BikingMailBox extends BikingMovingObject
 
 # mailbox ...
 

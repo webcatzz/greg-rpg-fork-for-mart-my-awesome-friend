@@ -38,6 +38,7 @@ var snails_to_escape_hell := 120
 @onready var snail_timer := $SnailTimer
 @onready var mailbox_timer := $MailboxTimer
 @onready var punishment_timer := $PunishmentTimer
+@onready var pedestrian_timer = $PedestrianTimer
 const OBSTACLE_PACKED: Array[PackedScene] = [
 	preload("res://scenes/biking/moving_objects/scn_obstacle_pothole.tscn"),
 	preload("res://scenes/biking/moving_objects/scn_obstacle_log.tscn"),
@@ -46,6 +47,7 @@ const MAIL_BOX_LOAD := preload("res://scenes/biking/moving_objects/scn_biking_ma
 const COIN_LOAD := preload("res://scenes/biking/moving_objects/scn_biking_coin.tscn")
 const SNAIL_LOAD := preload("res://scenes/biking/moving_objects/scn_biking_snail.tscn")
 const HOUSE_LOAD := preload("res://scenes/biking/moving_objects/scn_biking_house.tscn")
+const PEDESTRIAN_LOAD := preload("res://scenes/biking/moving_objects/scn_pedestrian.tscn")
 
 var distance := 0.0
 var stop_meter := -1.0
@@ -73,6 +75,7 @@ func _ready() -> void:
 	coin_timer.start()
 	snail_timer.start()
 	mailbox_timer.start()
+	pedestrian_timer.start()
 	set_speed(speed)
 	remove_child(ui)
 	SOL.add_ui_child(ui)
@@ -250,6 +253,12 @@ func _on_mailbox_timer_timeout() -> void:
 		mailbox.speed = speed
 		mailbox.hit.connect(_on_mailbox_hit)
 		add_child(mailbox)
+
+
+func _on_pedestrian_timer_timeout() -> void:
+	if speed < 5 or kiosk_activated or currently_hell: return
+	pedestrian_timer.start(randfn(15, 5))
+	add_child(PEDESTRIAN_LOAD.instantiate())
 
 
 func spawn_coin() -> void:
@@ -524,4 +533,3 @@ func coinify_snails() -> void:
 		coin.coin_got.connect(_on_coin_collected)
 		SOL.vfx("dustpuff", coin.global_position, {parent = coin})
 		snail.queue_free()
-

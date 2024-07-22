@@ -1067,6 +1067,8 @@ one_shot = true
 
 [node name="MailboxTimer" type="Timer" parent="."]
 
+[node name="PedestrianTimer" type="Timer" parent="."]
+
 [node name="PunishmentTimer" type="Timer" parent="."]
 
 [node name="UI" type="Control" parent="."]
@@ -1290,4 +1292,5 @@ perc: "
 [connection signal="timeout" from="CoinTimer" to="." method="_on_coin_timer_timeout"]
 [connection signal="timeout" from="SnailTimer" to="." method="_on_snail_timer_timeout"]
 [connection signal="timeout" from="MailboxTimer" to="." method="_on_mailbox_timer_timeout"]
+[connection signal="timeout" from="PedestrianTimer" to="." method="_on_pedestrian_timer_timeout"]
 [connection signal="timeout" from="PunishmentTimer" to="." method="_on_punishment_timer_timeout"]
